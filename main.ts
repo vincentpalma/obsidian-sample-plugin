@@ -141,7 +141,8 @@ class SampleSettingTab extends PluginSettingTab {
 	display(): void {
 		const { containerEl } = this;
 
-		containerEl.empty();
+		// containerEl.empty();
+		containerEl.innerHTML = "";
 
 		new Setting(containerEl)
 			.setName('Setting #1')
