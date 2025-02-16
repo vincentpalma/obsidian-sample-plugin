@@ -1,5 +1,5 @@
 // import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
-import { App, Modal, Notice, Plugin } from "obsidian";
+import { App, Modal, Notice, Plugin, PluginSettingTab, Setting } from "obsidian";
 
 // Remember to rename these classes and interfaces!
 
@@ -80,8 +80,8 @@ export default class MyPlugin extends Plugin {
 		//   }
 		// });
 
-		// // This adds a settings tab so the user can configure various aspects of the plugin
-		// this.addSettingTab(new SampleSettingTab(this.app, this));
+		// This adds a settings tab so the user can configure various aspects of the plugin
+		this.addSettingTab(new SampleSettingTab(this.app, this));
 
 		// If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
 		// Using this function will automatically remove the event listener when this plugin is disabled.
@@ -95,7 +95,7 @@ export default class MyPlugin extends Plugin {
 		);
 	}
 
-	onunload() {}
+	onunload() { }
 
 	async loadSettings() {
 		this.settings = Object.assign(
@@ -130,28 +130,28 @@ class SampleModal extends Modal {
 	}
 }
 
-// class SampleSettingTab extends PluginSettingTab {
-//   plugin: MyPlugin;
+class SampleSettingTab extends PluginSettingTab {
+	plugin: MyPlugin;
 
-//   constructor(app: App, plugin: MyPlugin) {
-//     super(app, plugin);
-//     this.plugin = plugin;
-//   }
+	constructor(app: App, plugin: MyPlugin) {
+		super(app, plugin);
+		this.plugin = plugin;
+	}
 
-//   display(): void {
-//     const { containerEl } = this;
+	display(): void {
+		const { containerEl } = this;
 
-//     containerEl.empty();
+		containerEl.empty();
 
-//     new Setting(containerEl)
-//       .setName('Setting #1')
-//       .setDesc('It\'s a secret')
-//       .addText(text => text
-//         .setPlaceholder('Enter your secret')
-//         .setValue(this.plugin.settings.mySetting)
-//         .onChange(async (value) => {
-//           this.plugin.settings.mySetting = value;
-//           await this.plugin.saveSettings();
-//         }));
-//   }
-// }
+		new Setting(containerEl)
+			.setName('Setting #1')
+			.setDesc('It\'s a secret')
+			.addText(text => text
+				.setPlaceholder('Enter your secret')
+				.setValue(this.plugin.settings.mySetting)
+				.onChange(async (value) => {
+					this.plugin.settings.mySetting = value;
+					await this.plugin.saveSettings();
+				}));
+	}
+}
